@@ -14,6 +14,22 @@
 
     - Windows: set PATH=%PATH%;Diretório bin do gradle
     - Linux (Mac): export PATH=$PATH:Diretório bin do gradle
+- Exemplo (Windows)
+![gradle-1](img/gradle-1.png)
+- `set PATH=%PATH%;C:\Software\gradle-7.6.1\bin`
+![gradle-2](img/gradle-2.png)
+
+### Correção Versão do Java
+
+- Efetuar o download do [Java 11](https://download.java.net/java/ga/jdk11/openjdk-11_windows-x64_bin.zip)
+- Descompactar o arquivo zip em alguma pasta:
+![java-1](img/java-1.png)
+- Alterar o `JAVA_HOME` apontando para o diretório acima:
+
+    - `SET JAVA_HOME="C:\Software\jdk-11"`
+
+- Verificar a versão da JVM executando `gradle -v`
+![java-2](img/java-2.png)
 
 ### Instalação Cordova
 
