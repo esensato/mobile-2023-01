@@ -102,37 +102,209 @@ let exibirMensagem = () => {
 }
 ```
 
-#### Estilos
+- Obs: para manter o posicionamento da interface ao abrir o teclado, ajustar o arquivo `AndroidManifest.xml` e incluir a propriedade `android:windowSoftInputMode="adjustPan"` na tag `<activity>`
+
+### Estilos
+
+- Estilos podem ser editados na pasta `css`, por exemplo, o `index.css`
 
 ```
-h1 {
+.app {
+    display: flex;
+    flex-direction: column;
+    width:100%
+}
+```
+
+### Sistema de Pedidos de Pizza
+
+- Criar um app para efetuar o pedido de pizza
+
+#### Interface
+
+- Titulo
+
+```
+<div class="titulo">Pizzaria Cordova</div>
+
+.titulo {
     font-size:24px;
-    font-weight:normal;
+    font-weight: bold;
     margin:0px;
-    overflow:visible;
     padding-top:10px;
     padding-bottom:10px;
     text-align:center;
-    border: solid white 1px;
-    width: 99%;
-}
-
-img {
-    padding-top: 10px;
-    width: 50%;
-    height: 50%;
-    display:block;
-    margin:auto;
+    width: 100%;
 }
 ```
 
-#### Imagens Externas
+- Imagem da Pizza
+
+```
+<div class="imagem-container">
+    <div class="imagem-lateral"><div class="seta" id="esquerda">&lt;&lt;</div></div>
+    <div class="imagem" id="imagem"></div>
+    <div class="imagem-lateral"><div class="seta" id="direita">&gt;&gt;</div></div></div>    
+</div>
+
+.imagem-container {
+    display: flex;
+    align-items: center;
+}
+
+.imagem-lateral {
+    flex: 1;
+}
+
+.imagem {
+    flex: 3;
+    border: solid;
+    height: 200px;
+}
+
+.seta {
+    font-size: 34px;
+    text-align: center;
+}
+```
+
+- Exibindo as imagens
+
+```
+background-image: url("../img/pizza.jpg");
+background-color: #cccccc;
+background-repeat: no-repeat;
+background-position: center;
+background-size: cover;
+```
+
+### Imagens Externas
 
 - Alterar em `index.html` a diretiva de segurança `img-src`:
 
 ```
 <meta http-equiv="Content-Security-Policy" 
 content="default-src 'self' data: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src * data: content:;">
+```
+
+- Formulário do Pedido
+
+```
+<div class="form-linha">
+    <div class="form-linha-esq">Local:</div>
+    <div class="form-linha-dir"><input type="text" id="endereco"></div>
+</div>
+
+<div class="form-linha">
+    <div class="form-linha-esq">Pizza:</div>
+    <div class="form-linha-dir" id="pizza">Calabresa com Cebola</div>
+</div>
+
+<div class="form-linha">
+    <div class="form-linha-esq">Preço:</div>
+    <div class="form-linha-dir" id="preco">R$ 35,00</div>
+</div>
+
+<div class="form-linha">
+    <div class="form-linha-esq">Qtde:</div>
+    <div class="form-linha-dir"><select id="qtde"><option value="1">1</option></select></div>
+</div>
+
+.form-linha {
+    display: flex;
+    align-items: center;
+    margin-top: 10%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.form-linha-esq {
+    flex: 1;
+}
+
+.form-linha-dir {
+    flex: 5;
+}
+```
+
+- Botão Enviar
+
+```
+<div class="form-linha">
+    <button class="enviar" id="enviar">Enviar</button>
+</div>
+
+.enviar {
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+```
+
+#### Lógica do Negócio
+
+- Criação das variáveis para referenciar os elementos da interface
+
+```
+const itensCardapio = [{pizza: "Calabresa", preco: "R$ 25,00", imagem: "../img/pizza.jpg"},
+{pizza: "Quatro Queijos", preco: "R$ 35,00", imagem: "../img/pizza.jpg"}];
+
+var idItem = 0;
+var endereco;
+var qtde;
+var preco;
+var imagem;
+var pizza;
+```
+
+- Referenciar os elementos da interface
+
+```
+endereco = document.getElementById('endereco');
+qtde = document.getElementById('qtde');
+preco = document.getElementById('preco');
+imagem = document.getElementById('imagem');
+pizza = document.getElementById('pizza');
+```
+
+- Criar uma função para atualizar a interface e chamá-la no `onDeviceReady`
+
+```
+const atualizarInterface = () => {
+    pizza.innerHTML = itensCardapio[idItem].pizza;
+    preco.innerHTML = itensCardapio[idItem].preco;
+    imagem.style.backgroundImage = itensCardapio[idItem].imagem;
+}
+```
+
+- Mover para a direita
+
+```
+const direita = () => {
+    if (idItem < itensCardapio.length) {
+        idItem++;
+    }
+    atualizarInterface();
+}
+```
+
+- Mover para a esquerda
+
+```
+const esquerda = () => {
+    if (idItem > 0) {
+        idItem--;
+    }
+    atualizarInterface();
+}
+```
+
+- Enviar dados
+
+```
+const enviar = () => {
+    alert (endereco.value + " - " + itensCardapio[idItem].pizza + " - " + qtde.value); 
+}
 ```
 
 #### Requisições HTTP
