@@ -13,15 +13,16 @@
 - Incluir o Gradle no `PATH`
 
     - Windows: set PATH=%PATH%;Diretório bin do gradle
-    - Linux (Mac): export PATH=$PATH:Diretório bin do gradle
+
 - Exemplo (Windows)
 ![gradle-1](img/gradle-1.png)
 - `set PATH=%PATH%;C:\Software\gradle-7.6.1\bin`
 ![gradle-2](img/gradle-2.png)
 
-### Correção Versão do Java
+### Correção Versão do Java - Windows
 
-- Efetuar o download do [Java 11](https://download.java.net/java/ga/jdk11/openjdk-11_windows-x64_bin.zip)
+- Efetuar o download do [Java 11 Windows](https://download.java.net/java/ga/jdk11/openjdk-11_windows-x64_bin.zip)
+
 - Descompactar o arquivo zip em alguma pasta:
 ![java-1](img/java-1.png)
 - Alterar o `JAVA_HOME` apontando para o diretório acima:
@@ -30,6 +31,48 @@
 
 - Verificar a versão da JVM executando `gradle -v`
 ![java-2](img/java-2.png)
+
+### Instalação Completa Mac
+
+- Abrir um **Terminal**
+
+<img src="img/mac-terminal.png" width="600" height="200">
+
+- Criar uma pasta `mobile/software`:
+    - `cd ~`
+    - `mkdir mobile`
+    - `cd mobile`
+    - `mkdir software`
+    - `cd software`
+
+- Efetuar o download do **Java 11 para Mac**
+    - `curl https://download.java.net/java/ga/jdk11/openjdk-11_osx-x64_bin.tar.gz --output openjdk-11_osx-x64_bin.tar.gz`
+
+- Descompactar o arquivo
+    - `tar xvf openjdk-11_osx-x64_bin.tar.gz`
+
+- Remover o zip
+    - `rm openjdk-11_osx-x64_bin.tar.gz`
+
+- Adicionar o **JAVA_HOME** no *profile*
+    - `echo "export JAVA_HOME=~/mobile/software/jdk-11.jdk/Contents/Home" >> ~/.zshrc`
+
+- Efetuar o download do **Gradle**
+    - `https://services.gradle.org/distributions/gradle-8.0.2-bin.zip`
+
+- Salvar na pasta `mobile/software`
+
+- Descompactar o arquivo
+    - `unzip gradle-8.0.2-bin.zip`
+
+- Remover o zip
+    - `rm  gradle-8.0.2-bin.zip`
+
+- Adicionar o **Gradle** ao `PATH`
+    - `echo "export PATH=$PATH:~/mobile/software/gradle-8.0.2/bin" >> ~/.zshrc`
+
+- Verificar a versão do Java no **Gradle** `JVM: 11 (Oracle Corporation 11+28)`:
+    - `gradle -v`
 
 ### Instalação Cordova
 
