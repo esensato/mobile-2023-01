@@ -10,6 +10,11 @@
 
 `cordova create pizzaria-admin pizzaria.admin PizzariaAdminApp`
 
+- Alterar a política de segurança dentro de `index.html`:
+
+`<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src * data: content:;">
+`
+
 - Utilizar o `css` abaixo:
 ```
 body {
