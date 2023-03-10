@@ -33,7 +33,7 @@
 
 ### Instalação Cordova
 
-`npm install -g cordova `
+`npm install -g cordova`
 
 `cordova -v`
 
@@ -56,7 +56,13 @@ Acessar o diretório em que o projeto foi criado
 
 ### Executando
 
+- No emulador (AVD)
+
 `cordova run android`
+
+- No navegador
+
+`cordova run browser -lc --target=chrome`
 
 ### Eventos
 
@@ -311,29 +317,48 @@ const enviar = () => {
 
 - Instalar o plugin `cordova plugin add cordova-plugin-advanced-http`
 
+- Alterar em `index.html` a diretiva de segurança `default-src`:
+
+```
+<meta http-equiv="Content-Security-Policy" 
+content="default-src * data: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src * data: content:;">
+```
+
 - Executando **GET**
 
 ```
 const request = () => {
-    cordova.plugin.http.get('https://pedidos-pizzaria.glitch.me/json', {
+    cordova.plugin.http.get('https://pedidos-pizzaria.glitch.me/ping', {
 }, {}, function(response) {
-  console.log(response.data);
+  alert(response.data);
 }, function(response) {
-  console.error(response.error);
+  alert(response.error);
 });
 
 }
 ```
 - Executando **POST**
 ```
+cordova.plugin.http.setDataSerializer('json');
 cordova.plugin.http.post('https://pedidos-pizzaria.glitch.me/', {
   pizza: "Atum com Queijo", quantidade: 1, endereco: "Rua das Rosas, 123"
 }, {}, function(response) {
-  console.log(response.status);
+  alert(response.status);
 }, function(response) {
-  console.error(response.error);
+  alert(response.error);
 });
 ```
+- Conferir os pedidos realizados:
+
+    `https://pedidos-pizzaria.glitch.me/`
+
+#### Exercícios
+
+- Atuaizar o POST para enviar os dados preenchidos pelo usuário
+- Obter o caradápio dinamicamente efetuando um GET no endpoint e atualizando os dados no app ao invés de utilizar a variável *hardcoded* `itensCardapio`
+
+    `https://pedidos-pizzaria.glitch.me/pizzas`
+
 #### Splash Screen
 
 - Instalar o plugin:
@@ -351,39 +376,93 @@ cordova.plugin.http.post('https://pedidos-pizzaria.glitch.me/', {
 
 #### Câmera
 
+- Criar um novo projeto
+
+    `cordova create foto tirar.foto FotoApp`
+
+- Entrar no diretório do projeto
+
+    `cd foto`
+
 - Instalar o plugin:
 
-`cordova plugin add cordova-plugin-camera`
+    `cordova plugin add cordova-plugin-camera`
+
+- Adicionar a plataforma
+
+    `cordova platform add android`
+
+- CSS
+
+    ```
+    body {
+        -webkit-touch-callout: none;
+        -webkit-text-size-adjust: none;
+        background-color:#E4E4E4;
+        font-family: system-ui, -apple-system, -apple-system-font, 'Segoe UI', 'Roboto', sans-serif;
+        font-size:12px;
+        height:100vh;
+        margin:0px;
+        padding:0px;
+        padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+        width:100%;
+    }
+
+    .app {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+        width:99%;
+        height: 95%
+    }
+
+    .preview {
+        flex: 5;
+        border: solid
+    }
+
+    .botao {
+        flex: 1;
+
+    }
+
+    .tirar {
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        font-size: 20px;
+    }
+    ```
 
 - Incluir um botão para acionar a câmera e o local para exibir a imagem
 
-```
-<button id = "cameraTakePicture">Tirar Foto</button>
-<img id = "myImage"></img>
-```
+    ```
+    <div class="app">
+        <div class="preview" id="preview"></div>
+        <div class="botao"><button class="tirar" id="tirarfoto">Tirar Foto</button></div>
+    </div>
+    ```
 
 - Registrar o evento de `click` no botão que vai acionar a câmera
 
-```
-document.getElementById("cameraTakePicture").addEventListener("click", cameraTakePicture); 
-```
+    ```
+    document.getElementById('tirarfoto').addEventListener('click', tirarFoto);
+    ```
 
-- Definir a função para efetuar a captura da imagem
+- Definir a função para efetuar a captura da imagem e exibir no `preview`
 
 ```
-function cameraTakePicture() { 
+const tirarFoto = () => {
     navigator.camera.getPicture(onSuccess, onFail, {  
-       quality: 50, 
-       destinationType: Camera.DestinationType.DATA_URL 
-    });  
-    
-    function onSuccess(imageData) { 
-       var image = document.getElementById('myImage'); 
-       image.src = "data:image/jpeg;base64," + imageData; 
-    }  
-    
-    function onFail(message) { 
-       alert('Failed because: ' + message); 
-    } 
- }
+        quality: 50, 
+        destinationType: Camera.DestinationType.DATA_URL 
+     });  
+     
+     function onSuccess(imageData) { 
+        preview.style.backgroundImage = "url('data:image/jpeg;base64," + imageData + "')"; 
+     }  
+     
+     function onFail(message) { 
+        alert('Failed because: ' + message); 
+     } 
 ```

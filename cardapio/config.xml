@@ -8,10 +8,4 @@
     <content src="index.html" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
-
-    <platform name="android">
-        <splash src="res/screen/android/pizza.png"/>
-        <preference name = "SplashMaintainAspectRatio" value = "true" />
-    </platform>
-
 </widget>

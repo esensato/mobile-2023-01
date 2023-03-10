@@ -1,3 +1,7 @@
+node_modules
+.DS_Store
+local
+
 # Built application files
 *.apk
 *.aar

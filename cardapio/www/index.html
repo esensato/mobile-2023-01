@@ -1,8 +1,5 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="Content-Security-Policy" content="default-src * data: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src * data: content:;">
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src * data: content:;">
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
@@ -12,13 +9,38 @@
     </head>
     <body>
         <div class="app">
-            <h1>Teste</h1>
-            <div id="deviceready">
-                <div><button id="request">Request</button></div>
-                <div id="resultado"></div>
-                <button id = "cameraTakePicture">TAKE PICTURE</button>
-                <img id = "myImage"></img>
+            <div class="titulo">Pizzaria Cordova</div>
+
+            <div class="imagem-container">
+                <div class="imagem-lateral"><div class="seta" id="esquerda">&lt;&lt;</div></div>
+                <div class="imagem" id="imagem"></div>
+                <div class="imagem-lateral"><div class="seta" id="direita">&gt;&gt;</div></div></div>    
             </div>
+
+            <div class="form-linha">
+                <div class="form-linha-esq">Local:</div>
+                <div class="form-linha-dir"><input type="text" id="endereco"></div>
+            </div>
+            
+            <div class="form-linha">
+                <div class="form-linha-esq">Pizza:</div>
+                <div class="form-linha-dir" id="pizza">Calabresa com Cebola</div>
+            </div>
+            
+            <div class="form-linha">
+                <div class="form-linha-esq">Preço:</div>
+                <div class="form-linha-dir" id="preco">R$ 35,00</div>
+            </div>
+            
+            <div class="form-linha">
+                <div class="form-linha-esq">Qtde:</div>
+                <div class="form-linha-dir"><select id="qtde"><option value="1">1</option></select></div>
+            </div>
+
+            <div class="form-linha">
+                <button class="enviar" id="enviar">Enviar</button>
+            </div>
+            
         </div>
         <script src="cordova.js"></script>
         <script src="js/index.js"></script>
