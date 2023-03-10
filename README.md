@@ -71,8 +71,9 @@
 - Adicionar o **Gradle** ao `PATH`
     - `echo "export PATH=$PATH:~/mobile/software/gradle-8.0.2/bin" >> ~/.zshrc`
 
-- Verificar a versão do Java no **Gradle** `JVM: 11 (Oracle Corporation 11+28)`:
-    - `gradle -v`
+- Verificar a versão do Java no **Gradle** abrindo um novo terminal dentro do **VS Code**
+
+<img src="img/gradle-mac.png" width="600" height="300">
 
 ### Instalação Cordova
 
