@@ -1,4 +1,14 @@
-cordova create pizzaria-admin pizzaria.admin PizzariaAdminApp
+## Trabalho 01 - Cordova - Administração da Pizzaria
+
+- Seguir o roteiro abaixo para criar uma interface administrativa para a pizzaria
+
+- O trabalho deve ser individual
+
+- Efetuar a entrega por meio do canvas enviando **APENAS** os arquivos **index.js** e **index.html**
+
+### Criar o projeto
+
+`cordova create pizzaria-admin pizzaria.admin PizzariaAdminApp`
 
 - Utilizar o `css` abaixo:
 ```
