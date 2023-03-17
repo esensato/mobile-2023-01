@@ -407,18 +407,18 @@ cordova.plugin.http.post('https://pedidos-pizzaria.glitch.me/', {
 
 #### Splash Screen
 
-- Instalar o plugin:
+- Instalar o *plugin*:
 
-`cordova plugin add cordova-plugin-splashscreen`
+    `cordova plugin add cordova-plugin-splashscreen`
 
 - Configurar a imagem no arquivo `config.xml`
-
-```
-<platform name="android">
-    <splash src="res/screen/android/pizza.png"/>
-    <preference name = "SplashScreenDelay" value = "3000" />
-</platform>
-```
+    ```
+    <platform name="android">
+        <splash src="res/screen/android/pizza.png"/>
+        <preference name = "SplashScreenDelay" value = "3000" />
+    </platform>
+    ```
+- O caminho da imagem deve ser relativo à raiz do projeto (pasta `res` no mesmo nível de `www`, por exemplo)
 
 #### Câmera
 
@@ -496,19 +496,33 @@ cordova.plugin.http.post('https://pedidos-pizzaria.glitch.me/', {
     ```
 
 - Definir a função para efetuar a captura da imagem e exibir no `preview`
+    ```
+    const tirarFoto = () => {
+        navigator.camera.getPicture(onSuccess, onFail, {  
+            quality: 50, 
+            destinationType: Camera.DestinationType.DATA_URL 
+        });  
+        
+        function onSuccess(imageData) { 
+            preview.style.backgroundImage = "url('data:image/jpeg;base64," + imageData + "')"; 
+        }  
+        
+        function onFail(message) { 
+            alert('Failed because: ' + message); 
+        } 
+    ```
+- Exemplo para envio a um endpoint via POST:
+    ```
+    const enviarFoto = () => {
 
-```
-const tirarFoto = () => {
-    navigator.camera.getPicture(onSuccess, onFail, {  
-        quality: 50, 
-        destinationType: Camera.DestinationType.DATA_URL 
-     });  
-     
-     function onSuccess(imageData) { 
-        preview.style.backgroundImage = "url('data:image/jpeg;base64," + imageData + "')"; 
-     }  
-     
-     function onFail(message) { 
-        alert('Failed because: ' + message); 
-     } 
-```
+    cordova.plugin.http.setDataSerializer('json');
+    cordova.plugin.http.post('https://pedidos-pizzaria.glitch.me/imagem', {
+    imagem: "data:image/jpeg;base64," + dadoImagem
+    }, {}, function(response) {
+    alert(response.status);
+    }, function(response) {
+    alert(response.error);
+    });
+    }
+    ```
+- Conferir as imagens em `https://pedidos-pizzaria.glitch.me/imagem`
