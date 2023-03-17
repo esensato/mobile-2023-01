@@ -405,6 +405,10 @@ cordova.plugin.http.post('https://pedidos-pizzaria.glitch.me/', {
 
     `https://pedidos-pizzaria.glitch.me/pizzas`
 
+#### Plugins
+
+- Mecanismos de extensão da plataforma - vide [Referência](https://cordova.apache.org/plugins/)
+
 #### Splash Screen
 
 - Instalar o *plugin*:
