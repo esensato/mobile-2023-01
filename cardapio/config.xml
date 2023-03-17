@@ -8,4 +8,10 @@
     <content src="index.html" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
+
+    <platform name="android">
+        <splash src="res/image/android/pizza.png"/>
+        <preference name = "SplashScreenDelay" value = "5000" />
+    </platform>
+
 </widget>
