@@ -1,11 +1,10 @@
-const itensCardapio = [
-    {pizza: "Calabresa", preco: "R$ 25,00", imagem: 'url("https://www.sabornamesa.com.br/media/k2/items/cache/9189082f4804c1ab16e77d2cfe8d09d4_XL.jpg"'},
-    {pizza: "Quatro Queijos", preco: "R$ 45,00", imagem: 'url("https://pastapizza.com.br/wp-content/uploads/2017/07/Pizza-Pizzaria-Forno-Forza-Express.jpg")'},
-    {pizza: "Frango com Catupiry", preco: "R$ 50,00", imagem: 'url("https://swiftbr.vteximg.com.br/arquivos/ids/174176-768-768/pizza-artesanal-mussarela-swift-618284-1.jpg?v=637545446302470000")'}
-];
-
+var itensCardapio;
 var itemAtual = 0;
 var imagem;
+var preco;
+var pizza;
+var quantidade;
+var endereco;
 
 document.addEventListener('deviceready', onDeviceReady, false);
 
@@ -14,6 +13,39 @@ function onDeviceReady() {
     document.getElementById('esquerda').addEventListener('click', esquerda);
     document.getElementById('direita').addEventListener('click', direita);
     imagem = document.getElementById('imagem');
+    preco = document.getElementById('preco');
+    pizza = document.getElementById('pizza');
+    quantidade = document.getElementById('qtde');
+    endereco = document.getElementById('endereco');
+    document.getElementById('enviar').addEventListener('click', enviarPedido);
+    carregarItens();
+}
+
+function enviarPedido() {
+    // espeficica o formato JSON para os dados enviados
+    cordova.plugin.http.setDataSerializer('json');
+    cordova.plugin.http.post('https://pedidos-pizzaria.glitch.me/', {
+    pizza: itensCardapio[itemAtual].pizza, 
+    quantidade: quantidade.value, 
+    endereco: endereco.value
+    }, {}, function(response) {
+        // verifica se deu certo (status = 200)
+        alert(response.status);
+    }, function(response) {
+        alert(response.error);
+    });
+}
+
+function carregarItens() {
+
+    cordova.plugin.http.get('https://pedidos-pizzaria.glitch.me/pizzas', {}, {}, 
+    function(response) {
+        // converter o texto JSON para um objeto JSON (JSON.parse)
+        itensCardapio = JSON.parse(response.data);
+        atualizarTela();
+    }, function(response) {
+        alert(response.error);
+    });
 }
 
 function direita() {
@@ -36,6 +68,9 @@ function esquerda() {
 
 function atualizarTela() {
     imagem.style.backgroundImage = itensCardapio[itemAtual].imagem;
+    preco.innerHTML = itensCardapio[itemAtual].preco;
+    pizza.innerHTML = itensCardapio[itemAtual].pizza;
+
 }
 
 function exibirMensagem() {
