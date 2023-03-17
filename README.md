@@ -374,6 +374,8 @@ content="default-src * data: https://ssl.gstatic.com 'unsafe-eval'; style-src 's
 const request = () => {
     cordova.plugin.http.get('https://pedidos-pizzaria.glitch.me/ping', {
 }, {}, function(response) {
+  // para converter a resposta em JSON
+  console.log(JSON.parse(response.data));
   alert(response.data);
 }, function(response) {
   alert(response.error);
