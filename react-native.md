@@ -11,6 +11,7 @@
 
 - [Instalação CLI - Expo](https://reactnative.dev/docs/environment-setup):
   - `npm install --location=global --loglevel=error expo-cli`
+  - Caso não dê certo, tentar com `npm install -g expo-cli`
   - Obs **Mac**:
     - `sudo npm install --location=global --loglevel=error expo-cli`
 ### Criação do Projeto
