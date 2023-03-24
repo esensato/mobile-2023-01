@@ -20,6 +20,7 @@
 - Escolher blank como modelo
     ```
     cd ControleGastos
+    npm install
     npm run android
     ```
 - Pasta `assets` pode ser utilizada para armazenar imagens utilizadas pelo app
