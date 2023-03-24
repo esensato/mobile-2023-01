@@ -1,0 +1,37 @@
+body {
+    -webkit-touch-callout: none;
+    -webkit-text-size-adjust: none;
+    background-color:#E4E4E4;
+    font-family: system-ui, -apple-system, -apple-system-font, 'Segoe UI', 'Roboto', sans-serif;
+    font-size:12px;
+    height:100vh;
+    margin:0px;
+    padding:0px;
+    padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+    width:100%;
+}
+
+.app {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    width:99%;
+    height: 95%
+}
+
+.preview {
+    flex: 5;
+    border: solid
+}
+
+.botao {
+    flex: 1;
+
+}
+
+.tirar {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 20px;
+}

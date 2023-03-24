@@ -75,6 +75,10 @@
 
 <img src="img/gradle-mac.png" width="600" height="300">
 
+### Problema Dimensão AVD Windows
+
+- [Vide](https://stackoverflow.com/questions/44013216/android-emulator-screen-size-not-the-same-as-device-frame)
+
 ### Instalação Cordova
 
 `npm install -g cordova`

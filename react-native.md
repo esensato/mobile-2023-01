@@ -302,7 +302,7 @@
   - `renderItem`: como os itens da lista serão exibidos visualmente - recebe como parâmetro um objeto JSON com os atributos `item` (texto) e `index` (índice do item no *array* mapeado para `data`)
   - `keyExtractor`: chaves únicas para cada item da lista - recebe como parâmetro o índice do elemento no *array* indicado em `data`
 
-#### Exibir gastos na FlatList
+#### Exibir Gastos na FlatList
 - Para organizar o código, criar uma função que retorna o item a ser exibido em cada linha da lista
     ```
   const renderGasto = (item, index) => {
@@ -337,3 +337,51 @@
                     style={styles.item}>{item}</Text>;
     }
     ```
+#### Funções como Componentes React
+
+- A função `renderGasto` deve ter o nome trocado para `RenderGasto`
+- Os parâmetros devem ser encapsulados em um único parâmetro `props`
+- As propriedades são obtidas de `props` como `props.index` e `props.item`
+  ```
+    const RenderGasto = (props) => {
+      return <Text onPress={()=>removerGasto(props.index)} 
+                  style={styles.item}>{props.item}</Text>;
+    }
+  ```
+- Para acionar a função agora encapsulada em um componente:
+  ```
+  <FlatList
+    data={listaGastos} 
+    renderItem={({item, index}) => <RenderGasto index={index} item={item}/>}
+    keyExtractor={idx => idx} />
+  ```
+ #### Melhorando o componente `RenderGasto`
+ - Incluindo uma `View` e estilo
+
+ ```
+   itemgasto: {
+    margin: 8,
+    padding: 8,
+    borderRadius: 6,
+    backgroundColor: '#88ff'
+  },
+ ```
+
+ ```
+   const RenderGasto = (props) => {
+    return <View style={styles.itemgasto}>
+      <Text onPress={()=>removerGasto(props.index)} 
+                 style={styles.item}>{props.item}</Text>
+      </View>;
+  }
+  ```
+
+  ```
+    const RenderGasto = (props) => {
+    return <Pressable onPress={()=>removerGasto(props.index)}>
+      <View style={styles.itemgasto}>
+      <Text style={styles.item}>{props.item}</Text>
+      </View>
+      </Pressable>;
+  }
+  ```
