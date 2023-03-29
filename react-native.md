@@ -60,7 +60,7 @@
 #### `<View>`
 - Importar `import { View } from 'react-native';`
 - Representa um container para demais componentes React onde estilos podem ser aplicados globalmente
-    ```
+    ```javascript
     export default function App() {
     var variavel = 'Ok!'
     const texto = () => {
@@ -77,7 +77,7 @@
 - Importar `import { StyleSheet } from 'react-native';`
 - Utilizar o método utilitário `StyleSheet.create` para criar objetos de estilo
 - São "semelhantes" ao **css** mas não são iguais!!!!
-    ```
+    ```javascript
     const styles = StyleSheet.create({
     container: {
         flex: 1, // ocupa toda a dimensão vertical
@@ -87,7 +87,7 @@
     }});
     ```
 - Referenciar com a propriedade `style={objeto_estilo.nome_estilo}`
-    ```
+    ```javascript
     export default function App() {
     var variavel = 'Ok!'
     return <View style={styles.container}>
@@ -102,7 +102,7 @@
 - Estado representa o valor das variáveis em um determinado momento
 - Caso o estado de uma variável seja alterado internamente pode-se desejar que esta alteração seja refletida na interface de usuário
 
-    ```
+    ```javascript
     export default function App() {
 
     let contador = 0;
@@ -119,7 +119,7 @@
 - O exemplo acima não funciona, o contador não é atualizado na interface
 - Para que isso seja feito é necessário o uso do `useState`
 
-```
+```javascript
   import { useState } from 'react';
   // variável contador somente leitura
   // para alterar seu valor utilizar a função incContador
@@ -144,25 +144,25 @@
  #### Exemplo `<TextInput>`
 - Importar controle de estado do React: `import { useState } from 'react';`
 - Criar uma variável de estado chamada `descricaoGasto`
-  ```
+  ```javascript
   const [descricaoGasto, onChangeDescricaoGasto] = useState('');
   ```
 - Criar um manipulador para o texto inserido:
-  ```
+  ```javascript
   const descricaoGastoHandler = (texto) => {
     console.log(texto);
     onChangeDescricaoGasto(texto);
   }
   ```
 - Definir o `<TextInput>`:
-  ```
+  ```javascript
   <TextInput style={styles.input} 
              value={descricaoGasto} 
              onChangeText={descricaoGastoHandler}
              placeholder="Descrição do Gasto"/>
   ```
 - Definir o estilo:
-  ```
+  ```css
   input: {
     height: 40,
     margin: 12,
@@ -265,7 +265,7 @@
     }
     ```
 - Estilos:
-    ```
+    ```javascript
     const styles = StyleSheet.create({
     container: {
         flex: 1, // ocupa toda a dimensão vertical
@@ -312,7 +312,7 @@
   }
     ```
 - Referenciar a função `renderGasto` para exibir o item de gasto adicionado
-    ```
+    ```javascript
     <FlatList
         data={listaGastos} 
         renderItem={({item, index}) => renderGasto(item, index)}
@@ -327,7 +327,7 @@
     }
     ```
 - Obtendo o item selecionado com `onPress`
-    ```
+    ```javascript
     const removerGasto = idx => {
         let removerGasto = [...listaGastos];
         removerGasto.splice(idx,1);
@@ -344,14 +344,14 @@
 - A função `renderGasto` deve ter o nome trocado para `RenderGasto`
 - Os parâmetros devem ser encapsulados em um único parâmetro `props`
 - As propriedades são obtidas de `props` como `props.index` e `props.item`
-  ```
+  ```javascript
     const RenderGasto = (props) => {
       return <Text onPress={()=>removerGasto(props.index)} 
                   style={styles.item}>{props.item}</Text>;
     }
   ```
 - Para acionar a função agora encapsulada em um componente:
-  ```
+  ```javascript
   <FlatList
     data={listaGastos} 
     renderItem={({item, index}) => <RenderGasto index={index} item={item}/>}
@@ -359,8 +359,9 @@
   ```
  #### Melhorando o componente `RenderGasto`
  - Incluindo uma `View` e estilo
+    - `borderRadius`: arredondamento dos cantos do componente
 
- ```
+ ```css
    itemgasto: {
     margin: 8,
     padding: 8,
@@ -368,8 +369,9 @@
     backgroundColor: '#88ff'
   },
  ```
+ - Criar uma `<View>` englobando `<Text>` com o estilo `itemgasto` aplicado
 
- ```
+ ```javascript
    const RenderGasto = (props) => {
     return <View style={styles.itemgasto}>
       <Text onPress={()=>removerGasto(props.index)} 
@@ -377,8 +379,9 @@
       </View>;
   }
   ```
-
-  ```
+### `<Pressable>`
+- Uma outra forma de permitir que um componente seja pressionado pelo usuário é utilizando o componente `<Pressable>` ao invés de utilizar a propriedade `onPress` diretamente em um componente visual (como no caso do `<Text>`)
+  ```javascript
     const RenderGasto = (props) => {
     return <Pressable onPress={()=>removerGasto(props.index)}>
       <View style={styles.itemgasto}>
@@ -387,3 +390,56 @@
       </Pressable>;
   }
   ```
+***
+
+### Organizando os Componentes
+- Criar uma pasta `components` dentro do projeto
+- Criar um arquivo `RenderGasto.js` dentro da pasta
+- Neste arquivo, importar os coponentes utilizados pelo `RenderGasto.js`
+`import { StyleSheet, Text, View, Pressable } from 'react-native';`
+- Mover a função `renderGasto` de `App.js` para `RenderGasto.js`
+  ```javascript
+  const RenderGasto = (props) => {
+      return <Pressable onPress={() => console.log("Remover...")}>
+        <View style={styles.itemgasto}>
+        <Text style={styles.item}>{props.item} {props.index}</Text>
+        </View>
+        </Pressable>;
+    }
+  ```
+- Incluir também a folha de estilos:
+  ```javascript
+  const styles = StyleSheet.create({
+    itemgasto: {
+      margin: 8,
+      padding: 8,
+      borderRadius: 6,
+      backgroundColor: '#88ff'
+    },
+    item: {
+      height: 40,
+      marginLeft: 10,
+      textAlignVertical: 'center'
+    }
+  });
+  ```
+- Tornar o componente acessível fora do arquivo em que está definido:
+`module.exports.RenderGasto = RenderGasto;`
+- Em `App` referenciar o componente por meio de `import`
+`import { RenderGasto } from './components/RenderGasto'`
+
+- **Problema:** como acionar uma função que não está definida no componente `RenderGasto` para remover um item da lista (gasto)?
+- **Solução:** passar uma função como parâmetro (*callback*) assim como `item` e `index` dentro de `props` e acioná-la dentro de `onPress`
+
+  ```javascript
+  const RenderGasto = (props) => {
+      return <Pressable onPress={() => props.onRemoverGasto(props.index)}>
+        <View style={styles.itemgasto}>
+        <Text style={styles.item}>{props.item} {props.index}</Text>
+        </View>
+        </Pressable>;
+    }
+  ```
+- Então passar como parâmetro a função de *callback* `removerGasto` via `onRemoverGasto`
+`<RenderGasto onRemoverGasto={removerGasto} index={index} item={item}/>`
+
