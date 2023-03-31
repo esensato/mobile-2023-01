@@ -170,7 +170,7 @@ body {
     ```
 - **PIZZARIA_ID** deve identificar a sua pizzaria, por exemplo, *pizzaria_do_ze*
 - Para testar se a pizza foi inserida corretamente basta efetuar uma requisição no navegador para a URL `https://pedidos-pizzaria.glitch.me/admin/pizzas/PIZZARIA_ID` trocando o **PIZZARIA_ID** para o nome de sua pizzaria
-- O botão `id="btnExcluir"` deve efetuar a exclusão da pizza efetuando uma requisição **DELETE** para a URL `https://pedidos-pizzaria.glitch.me/admin/pizzas/PIZZARIA_ID/NOME_PIZZA` trocando o **PIZZARIA_ID** para o nome de sua pizzaria e **NOME_PIZZA** pelo nome da pizza a ser excluída
+- O botão `id="btnExcluir"` deve efetuar a exclusão da pizza efetuando uma requisição **DELETE** para a URL `https://pedidos-pizzaria.glitch.me/admin/pizza/PIZZARIA_ID/NOME_PIZZA` trocando o **PIZZARIA_ID** para o nome de sua pizzaria e **NOME_PIZZA** pelo nome da pizza a ser excluída
 
 ### Lógica Negócio Lista das Pizzas Cadastradas
 
