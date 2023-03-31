@@ -31,32 +31,33 @@
     - estilos
 - Função `App()`indica o ponto de entrada do app
 - O retorno desta função deve representar o desenho da interface de usuário que será convertida para eleentos nativos na plataforma específica (ios, android, web, etc...)
-    ```
+    ```javascript
     export default function App() {
         return null;
     }
     ```
 - [Lista dos Componentes Visuais e APIs](https://reactnative.dev/docs/components-and-apis)
-
+***
 ### `<Text>`
 - Importar `import { Text } from 'react-native';`
 - Exibe um texto estático
 - Podem ser utlizadas expressões dentro do texto
 - Para processar expressões é necessário utilizar os símbolos `{` e `}`
 - Por exemplo:
-    ```
+    ```javascript
     export default function App() {
     var variavel = 'Ok!'
     return <Text>Tudo certo = {variavel}, 2 + 2 = {2 + 2}</Text>
     }
     ```
 - Estilos podem ser aplicados localmente `style={{margin: 100}}`
-    ```
+    ```javascript
     export default function App() {
         var variavel = 'Ok!'
         return <Text style={{margin: 100}}>Tudo certo = {variavel}, 2 + 2 = {2 + 2}</Text>
     }
     ```
+***
 #### `<View>`
 - Importar `import { View } from 'react-native';`
 - Representa um container para demais componentes React onde estilos podem ser aplicados globalmente
@@ -73,6 +74,7 @@
             </View>
     }
     ```
+***
 #### Estilos
 - Importar `import { StyleSheet } from 'react-native';`
 - Utilizar o método utilitário `StyleSheet.create` para criar objetos de estilo
@@ -96,12 +98,11 @@
             </View>
     }
     ```
+***
 #### Controle de Estado em React
-
 - Controle de estado é um conceito fundamental em **React**
 - Estado representa o valor das variáveis em um determinado momento
 - Caso o estado de uma variável seja alterado internamente pode-se desejar que esta alteração seja refletida na interface de usuário
-
     ```javascript
     export default function App() {
 
@@ -118,7 +119,6 @@
     ```
 - O exemplo acima não funciona, o contador não é atualizado na interface
 - Para que isso seja feito é necessário o uso do `useState`
-
 ```javascript
   import { useState } from 'react';
   // variável contador somente leitura
@@ -132,7 +132,7 @@
     incContador(++newContador);
   }
 ```
-
+***
 #### `<TextInput>`
 - Importar `import { TextInput } from 'react-native';`
 - Permite a entrada de um texto
@@ -171,6 +171,7 @@
     padding: 10,
   },
   ```
+***
 #### Exibindo o Texto Digitado
 - Criar o `<Text>`:
   ```
@@ -183,44 +184,45 @@
   - `style` - define o estilo
   - `onPress` - função acionada quando o botão é pressionado
   - `title` - rótulo do botão
-
+***
 #### Exemplo `<Button>`
 - Criar um `<Button>`
-  ```
+  ```javascript
   <Button title="Adicionar" onPress={addDescricaoGastoHandler}/>
   ```
 - Criar um manipulador a ser acionado quando o botão for pressionado:
-  ```
+  ```javascript
   const addDescricaoGastoHandler = () => {
     console.log(descricaoGasto);
   }
   ```
+***
 #### Armazenar Gastos em Uma Lista
 - **Nota:** como concatenar *arrays* em *Javascript* utilizando **spread** (`...`)
-    ```
+    ```javascript
     const letras = ["A", "B", "C"];
     const maisLetras = [letras, "D"];
     console.log(maisLetras);
     ```
 - Resultado: `[["A", "B", "C"], "D"]` - um *array* dentro de outro
-    ```
+    ```javascript
     console.log(...letras)
     ```
 - Concatenação com o **spread** (`...`):
-    ```
+    ```javascript
     const maisLetras = [...letras, "D"];
     console.log(maisLetras)
     ```
 - **Nota:** utilizando `map` para percorrer elementos de um *array*
-    ```
+    ```javascript
     maisLetras.map((item) => console.log(item))
     ```
 - Criar uma variável de estado para armazenar a lista de gastos:
-    ```
+    ```javascript
     const [listaGastos, setListaGastos] = useState([]);
     ```
 - Alterar a função acionada quando o botão é pressionado:
-  ```
+  ```javascript
   const addDescricaoGastoHandler  = () => {
 
     setListaGastos((gastosAtuais) => {
@@ -231,9 +233,10 @@
   ```
 - Os itens devem ser exibidos em uma lista contento `<Text>` para cada elemento
 - Utilizar a função `map` do javascript para percorrer os elementos da lista
-```
+```javascript
 {listaGastos.map((gasto) => <Text key={gasto}>{gasto}</Text>)}
 ```
+***
 ### FlexBox
 - Permite distribuir os componentes visuais proporcionalmente na área de visualização
 - A propriedade `flexDirecion` define como os componentes dentro da `<View>` serão distribuídos
@@ -242,15 +245,16 @@
 - Cada componente dentro da `<View>` tem uma propriedade `flex` para indicar o quanto de espaço irá ocupar
 - No exemplo baixo, 1 + 4 = 5, então **Item 1** irá ocupar 1/5 do espaço horizontal
 - Já o **Item 2** irá ocupar 4/5
-```
-<View style={{marginTop: 50, flexDirection:'row'}}>
-    <Text style={{flex: 1, borderColor: 'red', borderWidth: 1}}>Item 1</Text>
-    <Text style={{flex: 4, borderColor: 'red', borderWidth: 1}}>Item 2</Text>
-</View>
-```
+  ```javascript
+  <View style={{marginTop: 50, flexDirection:'row'}}>
+      <Text style={{flex: 1, borderColor: 'red', borderWidth: 1}}>Item 1</Text>
+      <Text style={{flex: 4, borderColor: 'red', borderWidth: 1}}>Item 2</Text>
+  </View>
+  ```
+***
 #### Ajustando o Layout Atual
 - Efetuar a refatoração dos elementos adicionando os estilos e aplicando o **flex**
-    ```
+    ```javascript
     return <View style={styles.container}>
                 <TextInput style={styles.input} 
                 value={descricaoGasto} 
@@ -289,7 +293,7 @@
     ```
 - Colocar o `<Button>` ao lado do `<TextInput>`
 - Utilizar `<View>` para criar agrupamento dos componentes visuais do app
-    ```
+    ```javascript
     <View style={{marginRight: 10, flexDirection: 'row', alignItems: 'center'}}>
     <TextInput style={styles.input} 
     value={descricaoGasto} 
@@ -298,15 +302,23 @@
     <Button style={styles.button} title="Adicionar" onPress={addDescricaoGastoHandler}/>
     </View>
     ```
+***
+#### `<Image>`
+- Importar `import { Image } from 'react-native';`
+- Permite incluir imagens
+- Os arquivos de imagem podem ser armazenados dentro da pasta `assets`
+- Exemplo (copiar o arquivo `001-coin.png` para a pasta `assets`):
+`<Image source={require('../assets/001-coin.png')}/>`
+***
 #### `<FlatList>`
 - Exibe uma lista de itens de forma otimizada:
   - `data`: lista contendo os valores a serem exibidos
   - `renderItem`: como os itens da lista serão exibidos visualmente - recebe como parâmetro um objeto JSON com os atributos `item` (texto) e `index` (índice do item no *array* mapeado para `data`)
   - `keyExtractor`: chaves únicas para cada item da lista - recebe como parâmetro o índice do elemento no *array* indicado em `data`
-
+***
 #### Exibir Gastos na FlatList
 - Para organizar o código, criar uma função que retorna o item a ser exibido em cada linha da lista
-    ```
+    ```javascript
   const renderGasto = (item, index) => {
     return <Text style={styles.item}>{item}</Text>;
   }
@@ -319,7 +331,7 @@
         keyExtractor={idx => idx} />
     ```
 - Definir o estilo para cada item:
-    ```
+    ```css
     item: {
         height: 40,
         marginLeft: 10,
@@ -339,8 +351,8 @@
                     style={styles.item}>{item}</Text>;
     }
     ```
+***
 #### Funções como Componentes React
-
 - A função `renderGasto` deve ter o nome trocado para `RenderGasto`
 - Os parâmetros devem ser encapsulados em um único parâmetro `props`
 - As propriedades são obtidas de `props` como `props.index` e `props.item`
@@ -379,6 +391,7 @@
       </View>;
   }
   ```
+***
 ### `<Pressable>`
 - Uma outra forma de permitir que um componente seja pressionado pelo usuário é utilizando o componente `<Pressable>` ao invés de utilizar a propriedade `onPress` diretamente em um componente visual (como no caso do `<Text>`)
   ```javascript
@@ -442,4 +455,10 @@
   ```
 - Então passar como parâmetro a função de *callback* `removerGasto` via `onRemoverGasto`
 `<RenderGasto onRemoverGasto={removerGasto} index={index} item={item}/>`
-
+## Exercícios
+- Transformar o `<TextInput>` e o `<Button>` onde o gasto é adicionado na lista em um componente
+- Adicionar os campos **Valor** e **Total** no app de Controle de Gastos conforme abaixo:
+<img src="./img/ex-1.png" width="300" height="150">
+- Adicionar o valor do gasto em cada gasto inserido na lista
+- Ao inserir ou remover um gasto, atualizar o total de despesas no campo **Total** (somente leitura)
+- **EXTRA**: utilizar `<Modal>` para exibir uma janela onde o gasto será inserido

@@ -130,6 +130,24 @@ async function criarPizza(idpizzaria, pizza, preco, imagem) {
     return "OK";
   }
 
+  async function apagarPizza(idpizzaria, pizza) {
+
+    const client = new MongoClient(uri);
+  
+    try {
+        const pizzaria = client.db('pizzaria_app_adm_pizzaria');
+        const novaPizza = pizzaria.collection('pizza');
+        await novaPizza.deleteOne({pizzaria: idpizzaria, pizza: pizza});
+    } catch (err) {
+      console.log(err);
+      return err;
+    }finally {
+        await client.close();
+      }
+      console.log('OK');
+      return "OK";
+}
+
 async function getPizzasPizzaria(idpizzaria) {
   const client = new MongoClient(uri);
 try {
@@ -196,6 +214,35 @@ app.get('/json', async (req, res) => {
 })
 
 // --------- ENDPOINTS APP ADM PIZZARIA --------- 
+
+// Apaga a pizza
+
+app.delete('/admin/pizza/:pizzariaid/:pizza', async (req, res) => {
+  
+  const pizzaria = req.params.pizzariaid;
+  const pizza = req.params.pizza;
+
+  if (!pizzaria || pizzaria === "") {
+    res.status(400);
+    res.send({erro: "Nome da pizzaria é obrigatório!"});
+
+  }
+  if (!pizza || pizza === "") {
+    res.status(400);
+    res.send({erro: "Nome da pizza é obrigatório!"});
+
+  }
+
+  const ret = await apagarPizza(pizzaria, pizza);
+  res.send(ret);
+})
+
+// Atualiza a pizza
+app.put('/admin/pizza', async (req, res, next) => {
+
+next();
+
+})
 
 // Cria uma nova pizza para a pizzaria
 app.post('/admin/pizza', async (req, res) => {
