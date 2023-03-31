@@ -1,5 +1,6 @@
 ## React Native - Aula 01
 
+- [NodeJs Download](https://nodejs.org/en/download)
 - [React Native](https://reactnative.dev/)
 - [VS Code](https://code.visualstudio.com/download)
 - [Android Studio / SDK](https://developer.android.com/studio)
