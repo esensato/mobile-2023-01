@@ -458,7 +458,7 @@
 ## Exercícios
 - Transformar o `<TextInput>` e o `<Button>` onde o gasto é adicionado na lista em um componente
 - Adicionar os campos **Valor** e **Total** no app de Controle de Gastos conforme abaixo:
-<img src="./img/ex-1.png" width="300" height="150">
+  <img src="./img/ex-1.png" width="300" height="150">
 - Adicionar o valor do gasto em cada gasto inserido na lista
 - Ao inserir ou remover um gasto, atualizar o total de despesas no campo **Total** (somente leitura)
 - **EXTRA**: utilizar `<Modal>` para exibir uma janela onde o gasto será inserido
