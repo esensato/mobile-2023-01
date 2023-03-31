@@ -38,7 +38,7 @@
     ```
 - [Lista dos Componentes Visuais e APIs](https://reactnative.dev/docs/components-and-apis)
 ***
-### `<Text>`
+#### `<Text>`
 - Importar `import { Text } from 'react-native';`
 - Exibe um texto estático
 - Podem ser utlizadas expressões dentro do texto
