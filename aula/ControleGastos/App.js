@@ -1,5 +1,4 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, Pressable } from 'react-native';
 import { useState } from 'react';
 
 export default function App() {
@@ -21,30 +20,54 @@ export default function App() {
 
   const novoValor = () => {
     atualizarNumero(parseInt(texto));
+    atualizaTexto("");
   }
 
+  const [gastos, addGasto] = useState(["Pizza", "Compra de Livro", "Sapato", "Coca-Cola"]);
+
+  const incluir = () => {
+    var novoGasto = [...gastos, texto];
+    addGasto(novoGasto);
+  }
+
+  const remover = (idx) => {
+    console.log("Remover: ", idx);
+    let novaLista = [...gastos];
+    novaLista.splice(idx, 1);
+    addGasto(novaLista);
+  }
+
+  const renderItem = (item, idx) => {
+    return <Pressable key={idx} onPress={()=>remover(idx)}>
+            <Text style={styles.item}>{item}</Text>
+           </Pressable>
+  }
   return (
     <View style={styles.container}>
-      <Text style={styles.texto}>{numero}</Text>
-      <TextInput style={styles.input} 
-                 placeholder='Novo Número'
-                 onChangeText={atualizaTexto}
-                 value={texto}/>
-      <Button title='Incrementar' onPress={incrementar}/>
-      <Button title='Novo Valor' onPress={novoValor}/>
-      <StatusBar style="auto" />
+      <View style={{flexDirection: "row", alignItems: "center", }}>
+        <TextInput style={styles.input} 
+                  placeholder='Novo Número'
+                  onChangeText={atualizaTexto}
+                  value={texto}/>
+        <Button title='Incluir' onPress={incluir}/>
+      </View>
+      {   gastos.map((item, idx) => renderItem(item, idx))   }
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  item: {
+    borderRadius:6, 
+    color:"white", 
+    margin: 10, 
+    padding: 10, 
+    backgroundColor: "#33f"
+  },
   container: {
     flex: 1,
     marginTop: '10%',
-    backgroundColor: '#ffff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 10
+    backgroundColor: '#ffff'
   },
   input: {
     height: 40,
