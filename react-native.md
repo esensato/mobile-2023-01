@@ -457,9 +457,95 @@
 - Então passar como parâmetro a função de *callback* `removerGasto` via `onRemoverGasto`
 `<RenderGasto onRemoverGasto={removerGasto} index={index} item={item}/>`
 ## Exercícios
-- Transformar o `<TextInput>` e o `<Button>` onde o gasto é adicionado na lista em um componente
+- Transformar o `<TextInput>` e o `<Button>` onde o gasto é adicionado na lista em um componente chamado `RenderEntradaGasto`;
 - Adicionar os campos **Valor** e **Total** no app de Controle de Gastos conforme abaixo:
 - <img src="./img/ex-1.png" width="300" height="150">
+- No componente `RenderEntradaGasto` criado:
+  - Alterar o layout para permitir a entrada do valor do gasto
+  - Criar uma nova variável de estado para armazenar o valor do gasto inserido (semelhante ao que foi feito para a descrição do gasto)
+  
 - Adicionar o valor do gasto em cada gasto inserido na lista
 - Ao inserir ou remover um gasto, atualizar o total de despesas no campo **Total** (somente leitura)
-- **EXTRA**: utilizar `<Modal>` para exibir uma janela onde o gasto será inserido
+- **EXTRA**: utilizar `<Modal>` para exibir uma janela para avisar que o total de gastos ultrapassou R$ 1.000,00
+***
+### `<Modal>`
+- Exibe uma janela sobreposta (**modal**)
+- Principais atributos:
+  - `visible`: indica quanto o `Modal` deve ser exibido (utilizar em conjunto com uma variável de estado *true* / *false*)
+  - `transparent`: diz que o `Modal` deve ter seu fundo transparente (utlizar *true*)
+  ```javascript
+  <Modal visible={exibirModal} transparent={true}>
+      <View style={styles.centeredView}>
+        <View style={styles.modalView}>
+          <Text>Modal</Text>
+          <Pressable
+      style={[styles.button, styles.buttonClose]}
+      onPress={() => setExibirModal(!exibirModal)}>
+      <Text style={styles.textStyle}>Fechar</Text>
+    </Pressable>
+        </View>
+      </View>
+  </Modal>
+
+    centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+    borderColor: 'red'
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonClose: {
+    backgroundColor: '#2196F3',
+  },
+  ```
+***
+### Reqisições HTTP com Axios
+- Existem várias bibliotecas para efetuar requisições **HTTP**
+- O `axios` é uma delas
+`npm install --save axios`
+- Importar a biblioteca
+`import axios from 'axios';`
+- Efetuando **POST**
+  ```javascript
+  const ret = await axios.post('https://controle-gastos.glitch.me/', {descricao: descricaoGasto, valor: valorGasto})
+  ```
+- Efetuando **GET**
+  ```javascript
+  const ret = await axios.get("https://controle-gastos.glitch.me/")
+  console.log(ret.data);
+  ```
+  
