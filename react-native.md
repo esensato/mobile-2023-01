@@ -457,6 +457,16 @@
 `<RenderGasto onRemoverGasto={removerGasto} index={index} item={item}/>`
 ## Exercícios
 - Transformar o `<TextInput>` e o `<Button>` onde o gasto é adicionado na lista em um componente chamado `RenderEntradaGasto`;
+- Criar um componente `TelaPrincipal`, transferir o conteúdo de `App` para ele e ajustar o `App` para conter apenas a referência ao novo componente criado:
+  ```javascript
+  import TelaPrincipal from './components/TelaPrincipal';
+
+  export default function App() {
+
+    return <TelaPrincipal />
+
+  }
+  ```
 - Adicionar os campos **Valor** e **Total** no app de Controle de Gastos conforme abaixo:
 - <img src="./img/ex-1.png" width="300" height="150">
 - No componente `RenderEntradaGasto` criado:
@@ -475,7 +485,7 @@
   - `visible`: indica quanto o `Modal` deve ser exibido (utilizar em conjunto com uma variável de estado *true* / *false*)
   - `transparent`: diz que o `Modal` deve ter seu fundo transparente (utlizar *true*)
   ```javascript
-  <Modal visible={exibirModal} transparent={true}>
+  <Modal visible={ exibirModal } transparent={true}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <Text>Modal</Text>
@@ -488,7 +498,7 @@
       </View>
   </Modal>
 
-    centeredView: {
+  centeredView: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -509,20 +519,6 @@
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-  },modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
   },
   button: {
     borderRadius: 20,
@@ -530,11 +526,63 @@
     elevation: 2,
   },
   buttonClose: {
-    backgroundColor: '#2196F3',
-  },
+    backgroundColor: '#2196F3'
+  }
   ```
 ***
-### Reqisições HTTP com Axios
+### Navegação com React Navigation
+- [React Navigation](https://reactnavigation.org/docs/getting-started/) é um componente que implementa vários tipos de navegação para aplicações **React Native**
+- Instalação dos módulos necessários
+
+  `npm install --save @react-navigation/native`
+  
+  `npm install --save react-native-screens react-native-safe-area-context`
+- Para implementar a navegação é necessário envolver os componentes em um `NavigationContainer`
+
+  `import { NavigationContainer } from '@react-navigation/native';`
+  ```javascript
+  export default function App() {
+
+    return (<NavigationContainer>
+      <TelaPrincipal />
+    </NavigationContainer>)
+
+  }
+  ```
+- Um dos tipos de navegação mais comum é o [Stack Navigator](https://reactnavigation.org/docs/native-stack-navigator)
+
+  `npm install --save @react-navigation/native-stack`
+- Criar o `NativeStackNavigator`
+
+  `import { createNativeStackNavigator } from '@react-navigation/native-stack';`
+  ```javascript
+  const Stack = createNativeStackNavigator();
+  ```
+- Informar as telas que serão controladas pelo `Stack Navigator`
+  ```javascript
+  return (<NavigationContainer>
+    <Stack.Navigator>
+      <Stack.Screen name="principal" component={TelaPrincipal}/>
+    </Stack.Navigator>
+  </NavigationContainer>)
+  ```
+- Criar uma segunda tela `TelaDetalhes` que deve ser exibida ao clicar em um gasto na lista e incluí-la no `Stack` com o nome `detalhes`
+- A `TelaPrincipal` agora receberá como parâmetro `props` um objeto `navigator` (`TelaPrincipal({ navigator })`)
+- Para navegar para outra tela, basta utilizar
+
+`navigator.navigate('detalhes')`
+- Pode-se passar parâmetro também entre duas telas
+
+`navigator.navigate('detalhes', {idGasto: props.idx})`
+- Na tela destino, o acesso aos parâmetros deve ser feito por meio do componente `route`
+  ```javascript
+  export default function TelaDetalhe({ route }) {
+      const idGasto = route.params.idGasto;
+      return <Text>{idGasto}</Text>
+  }
+  ```
+***
+### Requisições HTTP com Axios
 - Existem várias bibliotecas para efetuar requisições **HTTP**
 - O `axios` é uma delas
 `npm install --save axios`
