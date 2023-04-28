@@ -1,25 +1,10 @@
-import { FlatList, StyleSheet, Text, View, Button, TextInput, Pressable, Image } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import { useState } from 'react';
 
 import { RenderItem } from './components/RenderItem'
 import { EntradaGasto } from './components/EntradaGasto'
 
 export default function App() {
-
-  const [numero, atualizarNumero] = useState(0);
-
-  const incrementar = () => {
-    contador++;
-    let novoNumero = numero;
-    novoNumero++;
-    atualizarNumero(novoNumero);
-    console.log('onPress!!!', novoNumero);
-  }
-
-  const novoValor = () => {
-    atualizarNumero(parseInt(texto));
-    atualizaTexto("");
-  }
 
   const [gastos, addGasto] = useState(["Pizza", "Compra de Livro", "Sapato", "Coca-Cola", "Calça Jeans"]);
 
@@ -33,11 +18,6 @@ export default function App() {
     let novaLista = [...gastos];
     novaLista.splice(idx, 1);
     addGasto(novaLista);
-  }
-
-  const Mensagem = (props) => {
-    console.log(props);
-    return <Text style={styles.item}>{props.texto}</Text>
   }
 
   return (
