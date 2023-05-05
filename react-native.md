@@ -475,7 +475,7 @@
   
 - Adicionar o valor do gasto em cada gasto inserido na lista
 - Inserir uma imagem (ícone de moeda, por exemplo) na linha do gasto
-`<Image source={require('../assets/001-coin.png')}/>`
+  `<Image source={require('../assets/001-coin.png')}/>`
 - Ao inserir ou remover um gasto, atualizar o total de despesas no campo **Total** (somente leitura)
 - **EXTRA**: utilizar `<Modal>` para exibir uma janela para avisar que o total de gastos ultrapassou R$ 1.000,00
 ***
@@ -581,6 +581,86 @@
       return <Text>{idGasto}</Text>
   }
   ```
+***
+### Persistência com SQLLite
+- É possível persistir dados localmente tanto em Android quando em iOS utilizando o banco de dados relacional **SQLite**
+
+  `expo install expo-sqlite`
+- Criar um arquivo `BancoDados.js`
+  ```javascript
+  import * as SQLite from 'expo-sqlite';
+
+  const bcodados = SQLite.openDatabase('gastos.db');
+  ```
+  ```javascript
+  import * as SQLite from 'expo-sqlite';
+
+  const bcodados = SQLite.openDatabase('gastos.db');
+
+  export const iniciar = () => {
+
+      const retorno = new Promise((resolve, reject) => {
+
+      });
+
+      return retorno;
+
+  }
+  ```
+  - Criando a estrutura do banco de dados
+  ```javascript
+  import * as SQLite from 'expo-sqlite';
+
+  const bcodados = SQLite.openDatabase('gastos.db');
+
+  export const iniciar = () => {
+
+      const retorno = new Promise((resolve, reject) => {
+
+          bcodados.transaction((tx) => {
+
+                  tx.executeSql('CREATE TABLE IF NOT EXISTS gastos (id INTEGER PRIMARY KEY NOT NULL, descricao TEXT NOT NULL, valor REAL NOT NULL)',
+                  [],
+                  () => {
+                      resolve();
+                  },
+                  (_, error) => reject(error));    
+              });
+      });
+
+      return retorno;
+
+  }
+  ```
+- Em `App.js`
+  ```javascript
+  iniciar().then(() => console.log("Iniciado banco de dados")).catch((err) => console.log(err));
+  ```
+- Inserindo gastos
+```javascript
+    bcodados.transaction((tx) => {
+
+            tx.executeSql('INSERT INTO gastos (descricao, valor) VALUES (?, ?)',
+            [descricao, valor],
+            (_, result) => {
+                console.log(result)
+                resolve(result);
+            },
+            (_, error) => reject(error));    
+        });
+```
+- Listando gastos
+```javascript
+    bcodados.transaction((tx) => {
+
+            tx.executeSql('SELECT * FROM gastos',
+            [],
+            (_, result) => {
+                resolve(result.rows._array);
+            },
+            (_, error) => reject(error));    
+        });
+```
 ***
 ### Requisições HTTP com Axios
 - Existem várias bibliotecas para efetuar requisições **HTTP**
