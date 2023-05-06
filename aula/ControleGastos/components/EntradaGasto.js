@@ -3,17 +3,9 @@ import { useState } from 'react';
 
 const EntradaGasto = (props) => {
 
-    let real = Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL',
-        maximumSignificantDigits: 2,
-    });
-    
-    //console.log(`Pounds: ${pounds.format(price)}`);
-
     const [texto, atualizarTexto] = useState('');
     const [valor, atualizaValor] = useState("0.0");
-    const [totalGasto, atualizaTotalGasto] = useState("0.0");
+    // const [totalGasto, atualizaTotalGasto] = useState("0.0");
 
     const atualizaTexto = (txt) => {
         console.log(txt);
@@ -21,10 +13,12 @@ const EntradaGasto = (props) => {
     }
 
     const incluirGasto = () => {
-        var totalAtual = parseFloat(totalGasto);
-        totalAtual = totalAtual + parseFloat(valor);
-        atualizaTotalGasto(totalAtual);
+        // var totalAtual = parseFloat(totalGasto);
+        // totalAtual = totalAtual + parseFloat(valor);
+        // atualizaTotalGasto(totalAtual);
         props.callBackIncluir(texto, valor);
+        atualizarTexto("");
+        atualizaValor("0.0")
     }
     
     return <View style={{alignItems: "center", }}>
@@ -39,7 +33,7 @@ const EntradaGasto = (props) => {
                                 value={valor}/>
                     <Button title='Incluir' onPress={() => incluirGasto()}/>
                 </View>
-                <Text style={styles.total}>Total do Gasto: R$ {totalGasto}</Text>
+                <Text style={styles.total}>Total do Gasto: R$ {props.total}</Text>
             </View>
 }
 

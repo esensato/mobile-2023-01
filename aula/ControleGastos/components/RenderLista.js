@@ -8,6 +8,7 @@ const RenderLista = (props) => {
                                         item={item.descricao}
                                         valor={item.valor} 
                                         indice={index}
+                                        nav={props.nav}
                                         callBackRemover={props.callBackRemover}/>}
     keyExtractor={idx => idx.descricao} />;
 }

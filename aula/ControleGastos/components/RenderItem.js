@@ -5,7 +5,11 @@ const RenderItem = (props) => {
 
     return <Pressable onPress={()=>props.callBackRemover(props.indice)}>
                 <View style={ styles.item }>
-                <Image source={require('../assets/coin.png')} style={{width: 32, height: 32}}/>
+                  <Pressable onPress={()=>{
+                    props.nav.navigate('Detalhe', {item: props.item});
+                  }}>
+                    <Image source={require('../assets/coin.png')} style={{width: 32, height: 32}}/>
+                  </Pressable>
                 <Text style={{ marginLeft: 10 }}>{props.item} - {props.valor}</Text>
               </View>
            </Pressable>
