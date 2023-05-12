@@ -582,7 +582,7 @@
   }
   ```
 ***
-### Persistência com SQLLite
+### Persistência com SQLite
 - É possível persistir dados localmente tanto em Android quando em iOS utilizando o banco de dados relacional **SQLite**
 
   `expo install expo-sqlite`
@@ -677,3 +677,50 @@
   const ret = await axios.get("https://controle-gastos.glitch.me/")
   console.log(ret.data);
   ```
+***
+### Notifications
+- Permitem enviar mensagens de notificação dentro ddos padrões de cada platadorma móvel
+- Com o uso das [Notificações do Expo](https://docs.expo.dev/versions/latest/sdk/notifications/) é possível trabalhar com notificações tanto para iOS quanto Android
+
+`npx expo install expo-notifications`
+- Solicitanto autorização para receber notificações
+  ```javascript
+  const enviarNotificacao = async () => {
+
+    const perm = await Notifications.getPermissionsAsync();
+
+    console.log(perm);
+
+    if (perm.status === 'denied') {
+      await Notifications.requestPermissionsAsync();
+    }
+
+  }
+  ```
+- Agendando uma notificação
+  ```javascript
+  Notifications.scheduleNotificationAsync({
+    content: {
+      title: 'Controle de Gastos',
+      body: "Você está gastando muito!",
+      data: {valor: 1000}
+    },
+    trigger: {
+      seconds: 5
+    },
+  });
+  ```
+
+- Respondendo a uma notificação (criar fora do escopo da função que declara o componente!!!)
+  ```javascript
+  Notifications.setNotificationHandler({
+    handleNotification: async () => {
+      return {
+        shouldShowAlert: true,
+        shouldPlaySound: false,
+        shouldSetBadge: false  
+      }
+    },
+  });
+  ```
+  

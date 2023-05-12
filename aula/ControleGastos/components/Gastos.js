@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { EntradaGasto } from './EntradaGasto'
 import { RenderLista } from './RenderLista'
 
+
 export default function Gastos(props) {
 
   const [gastos, addGasto] = useState([]);
