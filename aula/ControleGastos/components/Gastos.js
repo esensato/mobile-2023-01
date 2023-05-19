@@ -1,15 +1,24 @@
 import { StyleSheet, View, Modal, Text, Button } from 'react-native';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { EntradaGasto } from './EntradaGasto'
 import { RenderLista } from './RenderLista'
-
+import { BancoDados, inserir, listar } from "./BancoDados";
 
 export default function Gastos(props) {
 
   const [gastos, addGasto] = useState([]);
   const [totalGasto, atualizaTotalGasto] = useState("0.0");
   const [exibirModal, setExibirModal] = useState(false);
+
+  useEffect(()=> {
+    BancoDados()
+    .then((_) =>listar()
+                  .then((ok) => addGasto(ok))
+                  .catch((err) => console.log(err)))
+    .catch((err) => console.log(err))
+  
+  }, [])
 
   const incluir = (texto, novoValor) => {
     const novoItem = {descricao: texto, valor: novoValor}
@@ -20,6 +29,13 @@ export default function Gastos(props) {
     if (novoTotal > 1000) {
       setExibirModal(true);
     }
+
+    BancoDados()
+    .then((_) => inserir(texto, novoValor)
+                      .then((ok) => console.log(ok))
+                      .catch((err) => console.log(err)))
+    .catch((err) => console.log(err))
+  
   }
 
   const remover = (idx) => {

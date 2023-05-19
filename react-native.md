@@ -679,7 +679,7 @@
   ```
 ***
 ### Notifications
-- Permitem enviar mensagens de notificação dentro ddos padrões de cada platadorma móvel
+- Permitem enviar mensagens de notificação dentro dos padrões de cada platadorma móvel
 - Com o uso das [Notificações do Expo](https://docs.expo.dev/versions/latest/sdk/notifications/) é possível trabalhar com notificações tanto para iOS quanto Android
 
 `npx expo install expo-notifications`
