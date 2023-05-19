@@ -10,6 +10,6 @@ const RenderLista = (props) => {
                                         indice={index}
                                         nav={props.nav}
                                         callBackRemover={props.callBackRemover}/>}
-    keyExtractor={idx => idx.id} />;
+    keyExtractor={idx => Math.random()} />;
 }
 module.exports.RenderLista = RenderLista;
